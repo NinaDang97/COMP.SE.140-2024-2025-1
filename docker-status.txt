@@ -1,0 +1,10 @@
+khanh.dang@R4582 ~ % docker container ls
+CONTAINER ID   IMAGE                COMMAND                  CREATED         STATUS         PORTS                                       NAMES
+04d9c9aca0a6   exercise1-service1   "python service.py"      2 minutes ago   Up 2 minutes   0.0.0.0:5001->5001/tcp, :::5001->5001/tcp   exercise1-service1-1
+d37efef36103   exercise1-service2   "docker-entrypoint.s…"   2 minutes ago   Up 2 minutes   5002/tcp                                    exercise1-service2-1
+khanh.dang@R4582 ~ % docker network ls
+NETWORK ID     NAME                DRIVER    SCOPE
+5ad71edbdc72   bridge              bridge    local
+818ea471a586   exercise1_default   bridge    local
+bfb227bb228e   host                host      local
+8277ce815935   none                null      local
