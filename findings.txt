@@ -1,0 +1,6 @@
+Two containers (Service1 is using Python's Flask, Server2 is using Node.js) are isolated environments. They still share same core system resources such as kernel, network and hardware with the host:
+- Containers run on the host's operating system kernel, unlike virtual  machines that have their own OS. This ensures containers to be lightweight and efficient
+- Containers share with the host's network interface via bridge mode, allowing containers to communicate with each other and the host. In this exercise, both containers share together the internal Docker network
+- Although processes inside a container are isolated, they can still be seen on the host by using system utilities (e.g., ps or top). The host can manage and monitor containerized processes.
+- Containers can share directories with the host via volume mounts. This allows persistent data storage, where files inside the container map to the host’s filesystem. In our setup, we don't explicitly use shared volumes, but the container’s file system can be accessed if mounted.
+- Containers share CPU and memory with the host. Docker imposes limits on these resources if specified; otherwise, they have access to the host's resources. This resource sharing can be fine-tuned through Docker resource limits.
