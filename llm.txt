@@ -1,0 +1,31 @@
+o The used LLM tool
+- ChatGPT (Model GPT-4o)
+
+o Motivation/reason to use LLM
+- I wanted to make sure that I understood the exercise correctly.
+- Helped me refine Linux commands for IP address, processes, disk space and running uptime resulted from Docker container in different languages. In my case, I'm using Python's Flask and Node.js as two separate server systems
+- Helped me fix bugs and explain nicely what could be the main problems behind
+
+o How and why LLM helped
+- At first LLM suggested me using only Python's Flask would be sufficient enough for two independent systems that would communicate with each other. However, I provided the selected texts from the assignment "In this exercise we will build a simple system composed of two small services (Service1 and
+Service2) implemented in different programming languages.", LLM agreed with me that another programming language such as Javascript (Nodejs framework) would be eventually better and closer to the requirements
+- For decision to use Python's Flask instead of other popular frameworks such as Django or FastAPI, LLM gave informative explanation that Flask is a great framework to start with a simple application as it's simple, fast, light-weight. Compared with Flask, FastAPI is better used in scenario that application needs a proper API documentation, class modeling in a full-stack application. And Django is better suited in a larger application, with less freedom and simplicty.
+- Gave me good instructions and a sample how I should go with `finding.txt` file
+
+o What kind of mistakes LLM did
+- Initially, LLM suggested fetching IP address and uptime in Node could be done in this way:
+
+```
+IP_address: execSync('hostname -I').toString().trim(),
+uptime: execSync('uptime -p').toString().trim()
+```
+
+However, that resulted in illegal operation and didn't return expected response
+I needed to remove the flags, added other Linux commands as fallback mechanism. It worked properly again:
+```
+IP_address: execSync("ifconfig | grep 'inet ' | awk '{print $2}' | head -n 1").toString().trim(),
+uptime: execSync('uptime').toString().trim()
+```
+
+o What were things that LLM was not able to provide
+LLM was able to help me navigate and figure out blocked challenges during the exercise. By giving descriptive and informative prompt commands, as well as detailed facts (for example occurring bugs), LLM was extremely helpful and on point.
