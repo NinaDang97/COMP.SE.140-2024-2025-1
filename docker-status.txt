@@ -1,3 +1,4 @@
+# exercise1
 khanh.dang@R4582 ~ % docker container ls
 CONTAINER ID   IMAGE                COMMAND                  CREATED         STATUS         PORTS                                       NAMES
 04d9c9aca0a6   exercise1-service1   "python service.py"      2 minutes ago   Up 2 minutes   0.0.0.0:5001->5001/tcp, :::5001->5001/tcp   exercise1-service1-1
@@ -8,3 +9,20 @@ NETWORK ID     NAME                DRIVER    SCOPE
 818ea471a586   exercise1_default   bridge    local
 bfb227bb228e   host                host      local
 8277ce815935   none                null      local
+
+# exercise4
+❯ docker container ls
+CONTAINER ID   IMAGE                COMMAND                  CREATED              STATUS              PORTS                                               NAMES
+09f1646c7058   exercise1-service1   "python service.py"      About a minute ago   Up About a minute   0.0.0.0:32813->5001/tcp, [::]:32813->5001/tcp       exercise1-service1-1
+cafe58b64acc   exercise1-service1   "python service.py"      About a minute ago   Up About a minute   0.0.0.0:32814->5001/tcp, [::]:32814->5001/tcp       exercise1-service1-2
+a88e34e3e63f   exercise1-service1   "python service.py"      About a minute ago   Up About a minute   0.0.0.0:32815->5001/tcp, [::]:32815->5001/tcp       exercise1-service1-3
+d0870ff094fc   nginx:latest         "/docker-entrypoint.…"   2 minutes ago        Up About a minute   80/tcp, 0.0.0.0:8198->8198/tcp, :::8198->8198/tcp   exercise1-nginx-1
+3232d9a45d67   exercise1-service2   "docker-entrypoint.s…"   2 minutes ago        Up About a minute   5002/tcp      
+
+❯ docker network ls
+NETWORK ID     NAME                  DRIVER    SCOPE
+d2b77bcb5daa   bridge                bridge    local
+4da3363b43a1   exercise1_default     bridge    local
+24429cc8ead3   exercise1_mynetwork   bridge    local
+8c249ed3e7f9   host                  host      local
+ab70a8ac4a4f   none                  null      local
