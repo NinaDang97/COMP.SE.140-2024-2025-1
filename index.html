@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Service Control Panel</title>
+    <script>
+        async function sendRequest() {
+            try {
+                const response = await fetch('/service');
+                const data = await response.json();
+                document.getElementById('output').value = JSON.stringify(data, null, 2);
+            } catch (error) {
+                document.getElementById('output').value = "Error fetching data";
+            }
+        }
+
+        async function stopServices() {
+            try {
+                await fetch('/stop', { method: 'POST' });
+                document.getElementById('output').value = "All services have been stopped.";
+            } catch (error) {
+                document.getElementById('output').value = "Error stopping services";
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Service Control Panel</h1>
+    <button onclick="sendRequest()">REQUEST</button>
+    <button onclick="stopServices()">STOP</button>
+    <textarea id="output" rows="10" cols="50" readonly></textarea>
+</body>
+</html>
