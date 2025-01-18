@@ -3,6 +3,8 @@ stages:
 
 build:
   stage: build
+  tags:
+    - macos
   script:
     - echo "Building Docker images..."
     - docker-compose build
