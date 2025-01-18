@@ -5,6 +5,14 @@ build:
   stage: build
   tags:
     - macos
+  image: docker:20.10.24
+  services:
+    - docker:dind
+  before-script:
+    - echo "Installing Docker Compose in Alpine Linux-based container"
+    - apk add --no-cache docker-compose 
   script:
+    - echo "Docker Compose version:"
+    - docker-compose version
     - echo "Building Docker images..."
     - docker-compose build
