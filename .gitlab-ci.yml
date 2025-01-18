@@ -8,7 +8,7 @@ build:
   image: docker:20.10.24
   services:
     - docker:dind
-  before-script:
+  before_script:
     - echo "Installing Docker Compose in Alpine Linux-based container"
     - apk add --no-cache docker-compose 
   script:
