@@ -8,11 +8,13 @@ build:
   image: docker:20.10.24
   services:
     - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""  # Disable TLS for Docker-in-Docker
   before_script:
     - echo "Installing Docker Compose in Alpine Linux-based container"
-    - apk add --no-cache docker-compose 
+    - apk add --no-cache docker-compose
   script:
-    - echo "Docker Compose version:"
     - docker-compose version
     - echo "Building Docker images..."
     - docker-compose build
