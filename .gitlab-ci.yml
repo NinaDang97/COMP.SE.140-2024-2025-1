@@ -23,6 +23,8 @@ build:
 
 deploy:
   stage: deploy
+  tags:
+    - macos    
   script:
     - echo "Deploying Docker containers..."
     - docker-compose up -d
