@@ -18,7 +18,7 @@ services:
       context: ./service1
       dockerfile: Dockerfile
     ports:
-      - "5001"
+      - "8199:8199"
     depends_on:
       - service2
     deploy:
