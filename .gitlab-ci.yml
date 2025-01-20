@@ -34,10 +34,13 @@ test:
   stage: test
   tags:
     - macos
+  <<: *default-docker-jobs
   image: python:3.12.7-alpine3.19
   before_script:
     - pip install pytest requests flask
   script:
+    - echo "Starting services for testing..."
+    - docker-compose up -d
     - echo "Running tests for Python service1..."
     - pytest service1/test/service.py
 
