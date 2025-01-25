@@ -44,7 +44,7 @@ test:
     # - echo "Starting services for testing..."
     # - docker-compose up -d
     - echo "Running tests for Python service1..."
-    - pytest service1/tests
+    - pytest service1/test/service.py
 
 
 deploy:
