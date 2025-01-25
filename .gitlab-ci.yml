@@ -23,12 +23,14 @@ build:
   stage: build
   tags:
     - macos
-  <<: *default-docker-jobs
+  # <<: *default-docker-jobs
   script:
-    - docker info
-    - docker-compose version
-    - echo "Building Docker images..."
-    - docker-compose build
+  #   - docker info
+  #   - docker-compose version
+  #   - echo "Building Docker images..."
+  #   - docker-compose build
+    - docker build -t service1 ./service1
+    - docker build -t service2 ./service2
 
 test:
   stage: test
@@ -44,7 +46,7 @@ test:
     # - echo "Starting services for testing..."
     # - docker-compose up -d
     - echo "Running tests for Python service1..."
-    - pytest service1/test/service.py
+    - pytest service1/tests
 
 
 deploy:
