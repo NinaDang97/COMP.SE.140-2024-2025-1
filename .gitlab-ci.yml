@@ -38,13 +38,13 @@ test:
   image: docker:20.10.24
   before_script:
     - apk add --no-cache python3 py3-pip
-    - pip install pytest requests flask
+    - pip install pytest
   #   - apk add --no-cache docker-compose  # Install docker-compose
   script:
     # - echo "Starting services for testing..."
     # - docker-compose up -d
     - echo "Running tests for Python service1..."
-    - pytest service1/test/service.py
+    - pytest service1/test.py
 
 
 deploy:
