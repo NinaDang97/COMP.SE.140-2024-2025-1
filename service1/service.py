@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import os
 import requests
 import socket
@@ -61,6 +61,32 @@ def stop():
         print(f"Failed to shut down: {e}", file=sys.stderr)
     
     return response
+
+# Global state variable
+state = "INIT"
+state_log = [] # Log of state changes
+
+@app.route('/state', methods=['GET'])
+def get_state():
+    """Return the current state of the service."""
+    return jsonify(state)
+
+@app.route('/state', methods=['POST'])
+def update_state():
+    """Update the state of the service."""
+    new_state = request.data.decode("utf-8")
+    valid_states = ["INIT", "PAUSED", "RUNNING", "SHUTDOWN"]
+
+    if new_state not in valid_states:
+        return jsonify({"error": "Invalid state"}), 400
+    
+    state_log.append({
+        "timestamp": time.time(),
+        "from": state,
+        "to": new_state
+    })
+
+    return jsonify(new_state)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8197)
