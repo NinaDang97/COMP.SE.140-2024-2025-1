@@ -25,21 +25,24 @@ def get_container_info():
 def get_service2():
     try:
         service2_response = requests.get("http://service2:5002")
+        service2_response.raise_for_status() # Raise an error for non-2xx responses
         service2_data = service2_response.json()
-    except:
+    except requests.RequestException as e:
         service2_data = {"error": "Service2 not available"}
     return service2_data
 
-@app.route('/', methods=['GET'])
-def get_info():
+def get_info_data():
     service1_data = get_container_info()
     service2_data = get_service2()
-    time.sleep(2) # Delay 2 seconds
-    response = {
+    return {
         "Service1": service1_data,
         "Service2": service2_data
     }
-    return jsonify(response)
+
+@app.route('/', methods=['GET'])
+def get_info():
+    time.sleep(2) # Delay 2 seconds
+    return jsonify(get_info_data())
 
 @app.route('/stop', methods=['POST'])
 def stop():
@@ -60,4 +63,4 @@ def stop():
     return response
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8199)
+    app.run(host="0.0.0.0", port=8197)

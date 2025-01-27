@@ -6,6 +6,6 @@ COPY service.py /app/
 
 RUN pip install Flask requests
 
-EXPOSE 8199
+EXPOSE 8197
 
 CMD [ "python", "service.py" ]
