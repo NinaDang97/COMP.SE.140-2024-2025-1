@@ -39,10 +39,7 @@ test:
   before_script:
     - apk add --no-cache python3 py3-pip
     - pip install pytest requests flask
-  #   - apk add --no-cache docker-compose  # Install docker-compose
   script:
-    # - echo "Starting services for testing..."
-    # - docker-compose up -d
     - echo "Running tests for Python service1..."
     - pytest service1/test.py
 
