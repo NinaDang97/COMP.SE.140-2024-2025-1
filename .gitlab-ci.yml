@@ -49,8 +49,9 @@ deploy:
   tags:
     - macos
   <<: *default-docker-jobs
-  script:
+  before_script:
     - echo "Cleaning up Docker containers..."
     - docker-compose down -v
+  script:
     - echo "Deploying Docker containers..."
     - docker-compose up --build -d
