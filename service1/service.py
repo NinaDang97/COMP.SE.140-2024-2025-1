@@ -5,6 +5,8 @@ import socket
 import time
 import sys
 import subprocess
+import time
+import datetime
 
 app = Flask(__name__)
 
@@ -39,7 +41,7 @@ def get_info_data():
         "Service2": service2_data
     }
 
-@app.route('/', methods=['GET'])
+@app.route('/request', methods=['GET'])
 def get_info():
     time.sleep(2) # Delay 2 seconds
     return jsonify(get_info_data())
@@ -82,20 +84,17 @@ def update_state():
     if new_state not in valid_states:
         return jsonify({"error": "Invalid state"}), 400
 
-    state_log.append({
-        "timestamp": time.time(),
-        "from": state,
-        "to": new_state
-    })
-
-    state = new_state
+    if state != new_state:
+        timestamp = datetime.datetime.utcnow().isoformat() + "Z"
+        state_log.append(f"{timestamp}: {state}->{new_state}")
+        state = new_state
 
     return jsonify(new_state)
 
 @app.route('/run-log', methods=['GET'])
 def get_run_log():
     """Retrieve the log of state transitions."""
-    return jsonify(state_log)
+    return "\n".join(state_log), 200, {'Content-Type': 'text/plain'}
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8197)

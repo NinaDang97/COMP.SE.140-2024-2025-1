@@ -13,7 +13,7 @@ def client():
         yield client
 
 def test_get_info_data(client):
-    response = client.get('/')
+    response = client.get('/request')
     assert response.status_code == 200
     data = response.get_json()
     assert "Service1" in data
@@ -41,3 +41,14 @@ def test_invalid_state(client):
     assert response.status_code == 400
     assert response.get_json() == {"error": "Invalid state"}
 
+def test_run_log(client):
+    client.put("/state", data="RUNNING", content_type="text/plain")
+    client.put("/state", data="PAUSED", content_type="text/plain")
+
+    response = client.get('/run-log')
+
+    assert response.status_code == 200
+    assert response.content_type == "text/plain"
+    log_lines = response.data.decode("utf-8").split("\n")
+    assert "INIT->RUNNING" in log_lines[0]
+    assert "RUNNING->PAUSED" in log_lines[1]
