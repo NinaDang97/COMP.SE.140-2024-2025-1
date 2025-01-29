@@ -25,12 +25,19 @@ def test_get_state(client):
     assert response.get_json() == "INIT"
 
 def test_update_state(client):
-    response = client.post('/state', data="RUNNING")
+    response = client.get('/state')
     assert response.status_code == 200
-    assert response.get_json() == "RUNNING"
+    assert response.get_json() == "INIT"
+    response1 = client.put('/state', data="RUNNING")
+    assert response1.status_code == 200
+    assert response1.get_json() == "RUNNING"
+    response2 = client.get('/state')
+    assert response2.status_code == 200
+    assert response2.get_json() == "RUNNING"
+
 
 def test_invalid_state(client):
-    response = client.post('/state', data="INVALID")
+    response = client.put('/state', data="INVALID")
     assert response.status_code == 400
     assert response.get_json() == {"error": "Invalid state"}
 

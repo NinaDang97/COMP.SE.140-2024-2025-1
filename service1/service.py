@@ -71,22 +71,31 @@ def get_state():
     """Return the current state of the service."""
     return jsonify(state)
 
-@app.route('/state', methods=['POST'])
+@app.route('/state', methods=['PUT'])
 def update_state():
     """Update the state of the service."""
-    new_state = request.data.decode("utf-8")
-    valid_states = ["INIT", "PAUSED", "RUNNING", "SHUTDOWN"]
+    global state
 
+    new_state = request.data.decode("utf-8").strip()
+    
+    valid_states = ["INIT", "PAUSED", "RUNNING", "SHUTDOWN"]
     if new_state not in valid_states:
         return jsonify({"error": "Invalid state"}), 400
-    
+
     state_log.append({
         "timestamp": time.time(),
         "from": state,
         "to": new_state
     })
 
+    state = new_state
+
     return jsonify(new_state)
+
+@app.route('/run-log', methods=['GET'])
+def get_run_log():
+    """Retrieve the log of state transitions."""
+    return jsonify(state_log)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8197)

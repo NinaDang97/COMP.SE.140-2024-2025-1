@@ -21,8 +21,8 @@ services:
       - "8197:8197"
     depends_on:
       - service2
-    deploy:
-      replicas: 3 # Scale Service1 to 3 instances
+    # deploy:
+    #   replicas: 3 # Scale Service1 to 3 instances
     networks:
       - mynetwork
 
