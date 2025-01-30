@@ -46,7 +46,6 @@ def get_info():
     time.sleep(2) # Delay 2 seconds
     return jsonify(get_info_data())
 
-@app.route('/stop', methods=['POST'])
 def stop():
     print("Service stop requested, shutting down all containers.", file=sys.stderr)
     
@@ -88,6 +87,10 @@ def update_state():
         timestamp = datetime.datetime.utcnow().isoformat() + "Z"
         state_log.append(f"{timestamp}: {state}->{new_state}")
         state = new_state
+
+    if new_state == "SHUTDOWN":
+        # Shut down the service
+        stop()
 
     return jsonify(new_state)
 

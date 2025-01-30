@@ -6,7 +6,7 @@
     <script>
         async function sendRequest() {
             try {
-                const response = await fetch('/service');
+                const response = await fetch('/request');
                 const data = await response.json();
                 document.getElementById('output').value = JSON.stringify(data, null, 2);
             } catch (error) {
@@ -16,18 +16,57 @@
 
         async function stopServices() {
             try {
-                await fetch('/stop', { method: 'POST' });
-                document.getElementById('output').value = "All services have been stopped.";
+                const response = await fetch('/state', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'text/plain'
+                    },
+                    body: 'SHUTDOWN'
+                })
+                document.getElementById('output').value = "All services have been stopped";
             } catch (error) {
-                document.getElementById('output').value = "Error stopping services";
+                document.getElementById('output').value = "Error shutting down services";
+            }
+        }
+
+        async function changeState(newState) {
+            try {
+                const response = await fetch('/state', {
+                    method: 'PUT',
+                    headers: {
+                        "Content-Type": "text/plain",
+                    },
+                    body: newState
+                });
+                document.getElementById('output').value = `State changed to: ${newState}`;
+            } catch (error) {
+                document.getElementById('output').value = "Error changing state";
+            }
+        }
+        async function getLogs() {
+            try {
+                const response = await fetch('/run-log');
+                const data = await response.text();
+                document.getElementById('output').value = data;
+            } catch (error) {
+                document.getElementById('output').value = "Error fetching logs";
             }
         }
     </script>
 </head>
 <body>
     <h1>Service Control Panel</h1>
-    <button onclick="sendRequest()">REQUEST</button>
-    <button onclick="stopServices()">STOP</button>
-    <textarea id="output" rows="10" cols="50" readonly></textarea>
+
+    <button onclick="changeState('RUNNING')">Init</button>
+    <button onclick="changeState('PAUSED')">Pause</button>
+    <button onclick="changeState('RUNNING')">Running</button>
+    <button onclick="changeState('SHUTDOWN')">Shutdown</button>
+    <button onclick="getLogs()">Get Log</button>
+
+    <h3>Actions</h3>
+    <button onclick="sendRequest()">Send Request</button>
+
+    <h3>Output</h3>
+    <textarea id="output" rows="5" cols="50" readonly></textarea>
 </body>
 </html>
